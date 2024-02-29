@@ -16,60 +16,41 @@
 
 static t_list	*fill_first_stack(int ac, char **av)
 {
-	t_list	*stack;
 	t_list	*re;
-	int		nbr;
+	t_list	*tmp;
 	int		i;
 
-	i = 2;
-	nbr = ft_atoi(av[1]);
-	stack = ft_lstnew(nbr);
-	re = stack;
+	i = 1;
+	re = ft_lstnew(ft_atoi(av[i]));
+	tmp = re;
+	i++;
 	while (i < ac)
 	{
-		nbr = ft_atoi(av[i]);
-		stack->next = ft_lstnew(nbr);
-		stack = stack->next;
+		tmp->next = ft_lstnew(ft_atoi(av[i]));
+		tmp = tmp->next;
 		i++;
 	}
 	return (re);
 }
 
-static int	get_len(char *str, int i)
-{
-	int	len;
-
-	len = 0;
-	while (str[i] != ' ' && str[i] != '\0')
-	{
-		len++;
-		i++;
-	}
-	return (len);
-}
-
 static t_list	*fill_from_str(char *str)
 {
-	t_list	*stack;
+	char	**tab;
+	t_list	*tmp;
 	t_list	*re;
-	char	*nbr;
 	int		i;
 
-	nbr = ft_substr(str, 0, get_len(str, 0));
-	i = get_len(str, 0) + 1;
-	stack = ft_lstnew(ft_atoi(nbr));
-	free(nbr);
-	re = stack;
-	while (str[i] != '\0')
+	tab = ft_split(str, ' ');
+	i = 1;
+	re = ft_lstnew(ft_atoi(tab[0]));
+	tmp = re;
+	while (tab[i] != NULL)
 	{
-		nbr = ft_substr(str, i, get_len(str, i));
-		stack->next = ft_lstnew(ft_atoi(nbr));
-		stack = stack->next;
-		i += get_len(str, i);
-		while (str[i] == ' ')
-			i++;
-		free(nbr);
+		tmp->next = ft_lstnew(ft_atoi(tab[i]));
+		tmp = tmp->next;
+		i++;
 	}
+	free_split(tab);
 	return (re);
 }
 
@@ -98,14 +79,17 @@ int	main(int ac, char **av)
 	if (ac <= 1)
 		return (0);
 	if (verif_error(ac, av) < 0)
+	{
+		write(1, "error\n", 6);
 		return (-1);
+	}
 	stack = malloc(sizeof(t_list *) * 2);
 	size = malloc(sizeof(int) * 3);
 	if (ac != 2)
 		stack[0] = fill_first_stack(ac, av);
 	else
 		stack[0] = fill_from_str(av[1]);
-	if (ft_lstsorted(stack[0]) == 1)
+	if (stack[0] == NULL || ft_lstsorted(stack[0]) == 1)
 	{
 		free_all(stack, size);
 		return (0);

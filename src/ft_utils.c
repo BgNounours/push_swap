@@ -15,9 +15,23 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-static void	ft_putchar(char c)
+int	word_count(char *str)
 {
-	write(1, &c, 1);
+	int	re;
+	int	i;
+
+	i = 0;
+	re = 0;
+	while (str[i] != '\0')
+	{
+		while (str[i] == ' ')
+			i++;
+		if (str[i] != '\0')
+			re++;
+		while (str[i] != '\0' && str[i] != ' ')
+			i++;
+	}
+	return (re);
 }
 
 void	ft_putstr(const char *str)
@@ -27,7 +41,7 @@ void	ft_putstr(const char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		ft_putchar(str[i]);
+		write(1, &str[i], 1);
 		i++;
 	}
 }
@@ -64,6 +78,8 @@ size_t	ft_strlen(char const *s)
 	int	i;
 
 	i = 0;
+	if (s == NULL)
+		return (0);
 	while (s[i] != '\0')
 		i++;
 	return (i);

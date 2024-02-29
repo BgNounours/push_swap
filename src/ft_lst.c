@@ -56,3 +56,16 @@ int	ft_lstsorted(t_list *lst)
 	}
 	return (1);
 }
+
+void	ft_printlst(t_list *lst)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		printf("%d ", tmp->nbr);
+		tmp = tmp->next;
+	}
+	printf("\n");
+}

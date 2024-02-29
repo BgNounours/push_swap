@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include <stddef.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
@@ -24,7 +25,17 @@ typedef struct s_list
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(char const *s);
 int		ft_atoi(char *nptr);
+int		ft_strcmp(char *s1, char *s2);
+char	**ft_split(char const *s, char c);
+int		get_len(char *str, int i);
+int		word_count(char *str);
 void	ft_putstr(const char *str);
+
+int		test_tab_str(char **tab);
+int		test_zero(char *s1, char *s2);
+int		test_tab(char **tab, int ac);
+int		verif_double(char **tab, int ac);
+int		verif_double_str(char **tab);
 
 t_list	*sa(t_list *stack);
 t_list	*ra(t_list *stack);
@@ -37,6 +48,7 @@ t_list	*rrb(t_list *stack);
 t_list	**pb(t_list **stack);
 
 t_list	*ft_lstnew(int n_nbr);
+void	ft_printlst(t_list *lst);
 int		ft_lstsorted(t_list *lst);
 int		ft_lstsize(t_list *lst);
 
@@ -60,5 +72,6 @@ t_list	**sort_hundred(t_list **stack, int *size);
 t_list	**sort_fhundred(t_list **stack, int *size);
 
 void	free_all(t_list **stack, int *size);
+void	free_split(char	**tab);
 
 #endif

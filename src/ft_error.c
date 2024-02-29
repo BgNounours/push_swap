@@ -13,39 +13,55 @@
 #include "../push_swap.h"
 #include <unistd.h>
 
-static void	ft_perror(const char *str)
+int	get_len(char *str, int i)
 {
-	int	i;
+	int	re;
 
-	while (str[i])
+	re = 1;
+	while (str[i] != '\0')
 	{
-		write(2, &str[i], 1);
 		i++;
+		if (str[i] == ' ')
+			return (re);
+		if (str[i] == '\0')
+			return (re);
+		re++;
 	}
+	return (re);
+}
+
+int	test_zero(char *s1, char *s2)
+{
+	if (ft_strcmp(s1, "0") == 0 && ft_strcmp(s2, "-0") == 0)
+		return (0);
+	if (ft_strcmp(s2, "0") == 0 && ft_strcmp(s1, "-0") == 0)
+		return (0);
+	return (-1);
 }
 
 int	verif_error(int ac, char **av)
 {
-	int	i;
-	int	y;
+	char	**av_str;
+	int		re;
 
-	i = 0;
-	y = 1;
-	while (y < ac)
+	if (ac == 2)
 	{
-		if (av[y][i] == '-' || av[y][i] == '+')
-			i++;
-		while (av[y][i] != '\0')
+		av_str = ft_split(av[1], ' ');
+		re = test_tab_str(av_str);
+		if (re == -1)
 		{
-			if (av[y][i] != ' ' && (av[y][i] < '0' || av[y][i] > '9'))
-			{
-				ft_perror("ERROR: please give NUMBERS ONLY as arguments\n");
-				return (-1);
-			}
-			i++;
+			free_split(av_str);
+			return (-1);
 		}
-		i = 0;
-		y++;
+		re = verif_double_str(av_str);
+		free_split(av_str);
 	}
-	return (1);
+	if (ac > 2)
+	{
+		re = test_tab(av, ac);
+		if (re == -1)
+			return (re);
+		re = verif_double(av, ac);
+	}
+	return (re);
 }
