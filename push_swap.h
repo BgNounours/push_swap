@@ -55,6 +55,7 @@ int		ft_lstsize(t_list *lst);
 int		verif_error(int ac, char **av);
 
 int		get_smallest_index(t_list *stack);
+int		get_nb_small(t_list *stack, int ministack);
 int		get_biggest_index(t_list *stack);
 int		get_second_smallest(t_list *stack, int smallest);
 int		get_first_index(t_list *stack, int min, int max);

@@ -23,17 +23,13 @@ static int	get_divf(int size)
 	return (5);
 }
 
-static t_list	**norm_fh(t_list **stack, int *size, int max, int div)
+static t_list	**norm_fh(t_list **stack, int *size)
 {
 	while (size[1] != 0)
 	{
-		while (size[1] != max - div)
-		{
-			stack = push_biggest(stack, size[1]);
-			size[0]++;
-			size[1]--;
-		}
-		max -= div;
+		stack = push_biggest(stack, size[1]);
+		size[0]++;
+		size[1]--;
 	}
 	return (stack);
 }
@@ -42,20 +38,24 @@ t_list	**sort_fhundred(t_list **stack, int *size)
 {
 	int	max;
 	int	div;
+	int	i;
+	int	i_deux;
 
 	div = get_divf(size[0]);
-	max = size[0] / div;
-	div = max;
+	i = size[0] / div;
+	i_deux = i;
+	max = get_nb_small(stack[0], i_deux);
 	while (size[0] != 0)
 	{
-		while (size[1] != max)
+		while (size[1] != i)
 		{
-			stack = push_closest(stack, max - div, max, size[0]);
+			stack = push_closest(stack, -10000000, max, size[0]);
 			size[0]--;
 			size[1]++;
 		}
-		max += div;
+		max = get_nb_small(stack[0], i_deux);
+		i += i_deux;
 	}
-	stack = norm_fh(stack, size, max, div);
+	stack = norm_fh(stack, size);
 	return (stack);
 }
